@@ -13,7 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
 import Search from './Components/Search';
-import helloWorld from './Exercises/helloWorld';
+import HelloWorld from './Exercises/HelloWorld';
+import TicTacToe from './Advanced/TicTacToe';
 
 
 
@@ -39,12 +40,16 @@ function App() {
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown title="Advanced" id="basic-nav-dropdown">
+              <NavDropdown.Item href="ticTacToe">Tic Tac Toe</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           <Search />
         </Navbar>
         
         
-        <Route path="/helloWorld" component={helloWorld}/>
+        <Route path="/helloWorld" component={HelloWorld}/>
+        <Route path="/ticTacToe" component={TicTacToe}/>
       </Container>
     </Router>
   );

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
-export default function helloWorld(){
+export default function HelloWorld(){
 
 
     return (
