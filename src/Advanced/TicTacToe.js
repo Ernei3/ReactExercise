@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 
 function calculateWinner(squares){
@@ -24,6 +26,17 @@ function calculateWinner(squares){
     }
   }
   return null;
+}
+
+function calculateSquarePosition(square){
+  let arrayLegend = [
+    "(1 1)", "(2 1)", "(3 1)",
+    "(1 2)", "(2 2)", "(3 2)",
+    "(1 3)", "(2 3)", "(3 3)",
+  ];
+  const res = (square !== null) ? arrayLegend[square] : null;
+
+  return res;
 }
 
 
@@ -71,9 +84,11 @@ function Square(props) {
       this.state ={
         history: [{
           squares: Array(9).fill(null),
+          lastMove: null,
         }],
         isNext: 'X',
         stepNumber: 0,
+        sortMovesFromNewest: false,
       };
     }
 
@@ -88,9 +103,11 @@ function Square(props) {
       this.setState({
         history: history.concat([{
           squares: newSquares,
+          lastMove: i,
         }]),
         isNext: this.state.isNext === 'X' ? 'O' : 'X',
         stepNumber: history.length,
+        sortMovesFromNewest: this.state.sortMovesFromNewest,
       });
     }
 
@@ -101,23 +118,52 @@ function Square(props) {
       });
     }
 
+    handleClickToggle(){
+      this.setState({
+        history: this.state.history,
+        isNext: this.state.isNext,
+        stepNumber: this.state.stepNumber,
+        sortMovesFromNewest: !(this.state.sortMovesFromNewest),
+      });
+    }
+
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
 
-      const moves = history.map((val, move) => {
-        const desc = move ?
-          'Go to move #' + move :
-          'Go to game start';
-        return (
-          <ListGroupItem key={move}>
-            <Button onClick={() => this.jumpTo(move)}>{desc}</Button>
-          </ListGroupItem>
-        );
+      let moves = history.map((val, move) => {
+        let desc;
+
+        if(move){
+          desc = 'Go to move #' + move + ': '+calculateSquarePosition(val.lastMove);
+        }else{
+          desc = 'Go to game start';
+        }
+        
+        
+        if(move === this.state.stepNumber){
+          return (
+            <ListGroupItem key={move}>
+              <Button onClick={() => this.jumpTo(move)} className="current-move">{desc}</Button>
+            </ListGroupItem>
+          );
+        }else{
+          return (
+            <ListGroupItem key={move}>
+              <Button onClick={() => this.jumpTo(move)}>{desc}</Button>
+            </ListGroupItem>
+          );
+        }
       });
 
-      let status
+      if(this.state.sortMovesFromNewest){
+        moves = moves.reverse();
+      }
+
+      const toggleValue = this.state.sortMovesFromNewest ? "Sort from oldest" : "Sort from newest"
+
+      let status;
       if(winner){
         status = 'Winner: ' + winner;
       }else if(this.state.stepNumber >= 9){
@@ -133,6 +179,9 @@ function Square(props) {
           </Container>
           <Container className="game-info">
             <Container className="status">{status}</Container>
+            <Container>
+              <Button onClick={() => this.handleClickToggle()}>{toggleValue}</Button>
+            </Container>
             <ListGroup>{moves}</ListGroup>
           </Container>
         </Container>
