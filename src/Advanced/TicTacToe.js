@@ -22,7 +22,7 @@ function calculateWinner(squares){
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [a, b, c];
     }
   }
   return null;
@@ -42,11 +42,20 @@ function calculateSquarePosition(square){
 
 function Square(props) {
 
+  if(props.res && props.res.includes(props.number)){
     return (
-    <Button className="square" onClick={() => props.onClick() }>
-        {props.value}
-    </Button>
-    );
+      <Button className="squareWinner" onClick={() => props.onClick() }>
+          {props.value}
+      </Button>
+      );
+  }else{
+      return (
+      <Button className="square" onClick={() => props.onClick() }>
+          {props.value}
+      </Button>
+      );
+    }
+
   }
   
   class Board extends React.Component {
@@ -57,7 +66,7 @@ function Square(props) {
       let rows = [];
 
       for (let i = 0; i < 9; i++){
-        rows = rows.concat(<Square value={this.props.squares[i]} onClick={ ()=> this.props.onClick(i)} />)
+        rows = rows.concat(<Square value={this.props.squares[i]} onClick={ ()=> this.props.onClick(i)} res={this.props.res} number={i} />)
       }
 
       let board = [];
@@ -130,7 +139,11 @@ function Square(props) {
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
-      const winner = calculateWinner(current.squares);
+      const res = calculateWinner(current.squares);
+      let winner;
+      if (res){
+        winner = current.squares[res[0]];
+      }
 
       let moves = history.map((val, move) => {
         let desc;
@@ -175,7 +188,7 @@ function Square(props) {
       return (
         <Container className="game">
           <Container className="game-board">
-            <Board squares={current.squares} onClick={(i) => this.handleClick(i) } />
+            <Board squares={current.squares} onClick={(i) => this.handleClick(i) } res={res} />
           </Container>
           <Container className="game-info">
             <Container className="status">{status}</Container>
