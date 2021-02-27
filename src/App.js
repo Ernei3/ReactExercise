@@ -1,8 +1,7 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Route,
-    useHistory
+    Route
 } from 'react-router-dom';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -15,7 +14,7 @@ import './App.css';
 import Search from './Components/Search';
 import HelloWorld from './Exercises/HelloWorld';
 import TicTacToe from './Advanced/TicTacToe';
-
+import Tick from './Exercises/Tick';
 
 
 
@@ -50,6 +49,7 @@ function App() {
         
         <Route path="/helloWorld" component={HelloWorld}/>
         <Route path="/ticTacToe" component={TicTacToe}/>
+        <Route path="/tick" component={Tick}/>
       </Container>
     </Router>
   );
