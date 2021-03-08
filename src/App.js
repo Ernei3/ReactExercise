@@ -15,6 +15,7 @@ import Search from './Components/Search';
 import HelloWorld from './Exercises/HelloWorld';
 import TicTacToe from './Advanced/TicTacToe';
 import Tick from './Exercises/Tick';
+import CountButtons from './Exercises/CountButtons';
 
 
 
@@ -34,8 +35,8 @@ function App() {
             <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Exercises" id="basic-nav-dropdown">
               <NavDropdown.Item href="/helloWorld">Hello World</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="/tick">Tick</NavDropdown.Item>
+              <NavDropdown.Item href="/countButtons">Counting Buttons</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
@@ -50,6 +51,7 @@ function App() {
         <Route path="/helloWorld" component={HelloWorld}/>
         <Route path="/ticTacToe" component={TicTacToe}/>
         <Route path="/tick" component={Tick}/>
+        <Route path="/countButtons" component={CountButtons}/>
       </Container>
     </Router>
   );
