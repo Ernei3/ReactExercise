@@ -30,9 +30,9 @@ function App() {
       <Container fluid="lg" className="navigation">
         
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="/">Navbar</Navbar.Brand>
+          <Navbar.Brand href="/">Home</Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/">Link</Nav.Link>
             <NavDropdown title="Exercises" id="basic-nav-dropdown">
               <NavDropdown.Item href="/helloWorld">Hello World</NavDropdown.Item>
               <NavDropdown.Item href="/tick">Tick</NavDropdown.Item>
